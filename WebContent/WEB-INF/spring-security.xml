@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security.xsd">
+	<!-- enable use-expressions -->
+	<http pattern="/static/**" security="none" />
+	<http pattern="/image/**" security="none" />
+	<http pattern="/services/**" security="none" />
+	<http pattern="/file/**" security="none" />
+	<http pattern="/index" security="none" />
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/forgotPassword" access="permitAll" />
+		<intercept-url pattern="/sendForgotPassword"            access="permitAll" />
+		<intercept-url pattern="/login*" access="permitAll" />
+		<intercept-url pattern="/logout*" access="permitAll" />
+		<intercept-url pattern="/static/**" access="permitAll" />
+		<intercept-url pattern="/reports**" access="hasRole('ROLE_REPORT')" />
+		<intercept-url pattern="/upload**" access="hasRole('ROLE_UPLOAD')" />
+		<intercept-url pattern="/masterRole**" access="hasRole('ROLE_USER_ROLE')" />
+		<intercept-url pattern="/viewPermission**" access="hasRole('ROLE_USER_ROLE')" />
+		<intercept-url pattern="/listUser**" access="hasRole('ROLE_USERS')" />
+		<intercept-url pattern="/addUser**" access="hasRole('ROLE_USERS')" />
+		<intercept-url pattern="/saveUser**" access="hasRole('ROLE_USERS')" />
+		<intercept-url pattern="/editUser**" access="hasRole('ROLE_USERS')" />
+		<intercept-url pattern="/downloadOrderFormExcel**" access="hasRole('ROLE_REPORT')" />
+		
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<!-- access denied page -->
+		<access-denied-handler error-page="/access-denied" />
+		<form-login login-page="/login" default-target-url="/home" authentication-failure-url="/login?error=true"
+			username-parameter="username" password-parameter="password" authentication-success-handler-ref="authenticationSuccessHandler" />
+		<logout logout-success-url="/login?logout" />
+	</http>
+	<beans:bean id="authenticationSuccessHandler" class="com.manitech.bubbleup.www.security.BubbleUpAuthenticationSuccessHandler" />
+	<!-- Select users and user_roles from database -->
+	<authentication-manager>
+		<authentication-provider>
+			<password-encoder ref="passwordEncoder" />
+			<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, enabled from user where username=?"
+				authorities-by-username-query="select username,roleName from role r inner join masterRoleAccess mra  on mra.roleId = r.roleId inner join  userMasterRole umr on  mra.masterRoleId = umr.masterRoleId  inner join  user u on umr.userId=u.id  where u.username=? " />
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>
