@@ -13,6 +13,14 @@
 				</ul>
 			</li>
 		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_USER_ROLE')">
+			<li class="has-sub"><a href="#"><i class="fa fa-wrench"></i><span class="title">Service</span></a>
+				<ul class="nav collapse">
+					<li class=""><a href="${ctx}/serviceList"><i class="fa fa-cogs"></i><span class="title">Service List</span></a></li>
+					<li class=""><a href="${ctx}/addService"><i class="fa fa-cog"></i><span class="title">Add Service</span></a></li>
+				</ul>
+			</li>
+		</sec:authorize>
 		</ul>
 <!-- /main navigation -->	
  

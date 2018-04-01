@@ -217,6 +217,22 @@
     <servlet-name>SaveCompany</servlet-name>
     <url-pattern>/saveCompany</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>addService</servlet-name>
+    <jsp-file>/WEB-INF/pages/service/addService.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addService</servlet-name>
+    <url-pattern>/addService</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>saveServices</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.SaveCompanyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>saveServices</servlet-name>
+    <url-pattern>/saveServices</url-pattern>
+  </servlet-mapping>
   <error-page>
     <error-code>500</error-code>
     <location>/error.jsp</location>
