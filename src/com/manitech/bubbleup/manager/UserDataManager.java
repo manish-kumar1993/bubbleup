@@ -19,7 +19,8 @@ import com.manitech.bubbleup.util.AppUtil;
 import com.manitech.bubbleup.util.DatabaseUtil;
 
 public class UserDataManager {
-	public boolean saveUserDetails(String userId, String firstName, String lastName, String username, String password, String mobileNo, String saltedPass, String status, String enabled, String loggedInUser, String masterRoleId) {
+	public boolean saveUserDetails(String userId, String firstName, String lastName, String username, String password, String mobileNo, 
+			String saltedPass, String status, String enabled, String loggedInUser, String masterRoleId) {
 		String token = null;
 		String saveQuery = null;
 		boolean isUpdateQuery = false;

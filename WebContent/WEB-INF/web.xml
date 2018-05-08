@@ -233,6 +233,38 @@
     <servlet-name>saveServices</servlet-name>
     <url-pattern>/saveServices</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>addWorker</servlet-name>
+    <jsp-file>/WEB-INF/pages/worker/addWorker.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addWorker</servlet-name>
+    <url-pattern>/addWorker</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>saveWorkers</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.SaveWorkerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>saveWorkers</servlet-name>
+    <url-pattern>/saveWorkers</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>addVehicle</servlet-name>
+    <jsp-file>/WEB-INF/pages/vehicle/addVehicle.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addVehicle</servlet-name>
+    <url-pattern>/addVehicle</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>saveVehicle</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.SaveVehicleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>saveVehicle</servlet-name>
+    <url-pattern>/saveVehicle</url-pattern>
+  </servlet-mapping>
   <error-page>
     <error-code>500</error-code>
     <location>/error.jsp</location>

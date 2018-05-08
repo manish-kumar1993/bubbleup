@@ -21,6 +21,22 @@
 				</ul>
 			</li>
 		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_USER_ROLE')">
+			<li class="has-sub"><a href="#"><i class="fa fa-wrench"></i><span class="title">Workers</span></a>
+				<ul class="nav collapse">
+					<li class=""><a href="${ctx}/workerList"><i class="fa fa-cogs"></i><span class="title">Worker List</span></a></li>
+					<li class=""><a href="${ctx}/addWorker"><i class="fa fa-cog"></i><span class="title">Add Worker</span></a></li>
+				</ul>
+			</li>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_USER_ROLE')">
+			<li class="has-sub"><a href="#"><i class="fa fa-car"></i><span class="title">Vehicle</span></a>
+				<ul class="nav collapse">
+					<li class=""><a href="${ctx}/vehicleList"><i class="fa fa-motorcycle"></i><span class="title">Vehicle List</span></a></li>
+					<li class=""><a href="${ctx}/addVehicle"><i class="fa fa-cab"></i><span class="title">Add Vehicle</span></a></li>
+				</ul>
+			</li>
+		</sec:authorize>
 		</ul>
 <!-- /main navigation -->	
  

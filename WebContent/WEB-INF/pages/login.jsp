@@ -1,6 +1,6 @@
 <%@ include file="/common/taglibs.jsp"%>
 <c:if test="${pageContext.request.userPrincipal.name != null}">
-		<c:redirect url="/reports" />	
+		<c:redirect url="/dashboard" />	
 </c:if>
 <jsp:include page="/common/resources.jsp" />
 <html lang="en">
