@@ -42,7 +42,7 @@
 								</c:forEach>
 						</c:if>
 					</tbody>
-						<c:if test="${requestScope.reportList.size()<=0}">
+						<c:if test="${requestScope.users.size()<=0}">
 							<tr>
 								<td colspan="4">No Users available.</td>
 							</tr>

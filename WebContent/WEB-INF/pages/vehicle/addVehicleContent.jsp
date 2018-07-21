@@ -10,14 +10,14 @@
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<label>* Vehicle Name</label> <input type="text" id="address"
-							name="service" placeholder="Vehicle Name"
+							name="name" placeholder="Vehicle Name"
 							class="form-control" value="${requestScope.name}" maxlength="50" />
 <!-- 							<label id="ccId" class="errormsg">Please enter Address</label> -->
 <!-- 							<label id="ccId1" class="errormsg">Please enter valid address</label> <br> -->
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<label>* Amount with Delivery Charges</label> <input type="text" id="description"
-							name="description" placeholder="Amount with Delivery Charges"
+							name="charges" placeholder="Amount with Delivery Charges"
 							class="form-control" value="${requestScope.charges}" maxlength="50" />
 <!-- 							<label id="ccId" class="errormsg">Please enter country</label> -->
 <!-- 							<label id="ccId1" class="errormsg">Please enter valid country</label> <br> -->

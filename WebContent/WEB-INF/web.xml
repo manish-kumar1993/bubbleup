@@ -168,7 +168,7 @@
    <servlet>
     <display-name>sendForgotPassword</display-name>
     <servlet-name>sendForgotPassword</servlet-name>
-    <servlet-class>com.manitech.bubbleup.user.servlet.SendForgotPasswordServlet</servlet-class>
+    <servlet-class>com.manitech.bubbleup.user.servlet.SendForgotPassword</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>sendForgotPassword</servlet-name>
@@ -227,11 +227,19 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>saveServices</servlet-name>
-    <servlet-class>com.manitech.bubbleup.company.servlet.SaveCompanyServlet</servlet-class>
+    <servlet-class>com.manitech.bubbleup.services.servlet.SaveServicesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>saveServices</servlet-name>
     <url-pattern>/saveServices</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ListServiceServlet</servlet-name>
+    <servlet-class>com.manitech.bubbleup.services.servlet.ListServicesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListServiceServlet</servlet-name>
+    <url-pattern>/listService</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>addWorker</servlet-name>
@@ -250,6 +258,14 @@
     <url-pattern>/saveWorkers</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>ListWorkerServlet</servlet-name>
+    <servlet-class>com.manitech.bubbleup.user.servlet.ListUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListWorkerServlet</servlet-name>
+    <url-pattern>/workerList</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>addVehicle</servlet-name>
     <jsp-file>/WEB-INF/pages/vehicle/addVehicle.jsp</jsp-file>
   </servlet>
@@ -259,11 +275,19 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>saveVehicle</servlet-name>
-    <servlet-class>com.manitech.bubbleup.company.servlet.SaveVehicleServlet</servlet-class>
+    <servlet-class>com.manitech.bubbleup.vehicle.servlet.SaveVehicleServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>saveVehicle</servlet-name>
     <url-pattern>/saveVehicle</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ListVehicleServlet</servlet-name>
+    <servlet-class>com.manitech.bubbleup.vehicle.servlet.ListVehicleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListVehicleServlet</servlet-name>
+    <url-pattern>/listVehicles</url-pattern>
   </servlet-mapping>
   <error-page>
     <error-code>500</error-code>
