@@ -14,6 +14,7 @@ import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.manitech.bubbleup.model.MasterRole;
+import com.manitech.bubbleup.model.Role;
 import com.manitech.bubbleup.model.UserDetail;
 import com.manitech.bubbleup.util.AppUtil;
 import com.manitech.bubbleup.util.DatabaseUtil;
@@ -209,32 +210,6 @@ public class UserDataManager {
 		return userDetail;
 	}
 
-	public String getClientLogoByclientId(String clientId) {
-		String selectQuery = null;
-		String logo = "";
-		if (AppUtil.isNotEmpty(clientId)) {
-			selectQuery = "select clientLogo from client where  clientId=? ";
-			Connection connection = DatabaseUtil.getDbConnection();
-			PreparedStatement prepareStatement = null;
-
-			try {
-				prepareStatement = connection.prepareStatement(selectQuery);
-				prepareStatement.setString(1, clientId);
-				ResultSet resultSet = prepareStatement.executeQuery();
-
-				if (resultSet.next()) {
-					logo = resultSet.getString("clientLogo");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				DatabaseUtil.closePreparedStatement(prepareStatement);
-				DatabaseUtil.closeDBConnection(connection);
-			}
-		}
-		return logo;
-	}
-
 
 	public boolean updateUserPassword(String password, String username) {
 		boolean passwordUpdated = false;
@@ -358,35 +333,6 @@ public class UserDataManager {
 		return userDetails;
 	}
 
-
-	public Set<UserDetail> getUserRegionNameBasedOnRegionId(List<UserDetail> userRegion) {
-		Set<UserDetail> userDetails = new HashSet<UserDetail>();
-		Connection connection = DatabaseUtil.getDbConnection();
-		PreparedStatement preparedStatement = null;
-		for (int i = 0; i < userRegion.size(); i++) {
-			StringBuffer stringBuffer = new StringBuffer("select region from region where 1=1 ");
-			if (AppUtil.isNotEmpty(userRegion.get(i).getRegionId())) {
-				stringBuffer.append(" and id='" + userRegion.get(i).getRegionId() + "' ");
-			}
-			try {
-				preparedStatement = connection.prepareStatement(stringBuffer.toString());
-				ResultSet resultSet = preparedStatement.executeQuery();
-				while (resultSet.next()) {
-					UserDetail userDetail = new UserDetail();
-					userDetail.setRegion(resultSet.getString("region"));
-					userDetails.add(userDetail);
-				}
-				resultSet.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				DatabaseUtil.closePreparedStatement(preparedStatement);
-				DatabaseUtil.closeDBConnection(connection);
-			}
-		}
-		return userDetails;
-	}
-
 	public boolean userRoleUpdate(String masterRoleId, List<UserDetail> userRoleIds) {
 		boolean update = false;
 		Connection connection = DatabaseUtil.getDbConnection();
@@ -411,6 +357,34 @@ public class UserDataManager {
 			DatabaseUtil.closeDBConnection(connection);
 		}
 		return update;
+	}
+
+
+
+
+
+	public List<String> geRolesByUserId(String userId) {
+		String selectQuery = null;
+		List<String> roleList = new ArrayList<>();
+		if (AppUtil.isNotEmpty(userId)) {
+			selectQuery = "select roleName from role where roleId in (select roleId from masterroleaccess where masterRoleId = "
+					+ "(SELECT masterRoleId FROM usermasterrole WHERE userId = '"+ userId +"'))";
+			Connection connection = DatabaseUtil.getDbConnection();
+			PreparedStatement prepareStatement = null;
+			try {
+				prepareStatement = connection.prepareStatement(selectQuery);
+				ResultSet resultSet = prepareStatement.executeQuery();
+				while (resultSet.next()) {
+					roleList.add(resultSet.getString("roleName"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DatabaseUtil.closePreparedStatement(prepareStatement);
+				DatabaseUtil.closeDBConnection(connection);
+			}
+		}
+		return roleList;
 	}
 
 }

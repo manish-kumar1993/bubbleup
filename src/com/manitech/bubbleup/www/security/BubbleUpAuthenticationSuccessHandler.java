@@ -85,9 +85,9 @@ public class BubbleUpAuthenticationSuccessHandler implements AuthenticationSucce
 		if (authorities != null) {
 			String access = authorities.toString();
 			// for (GrantedAuthority grantedAuthority : authorities) {
-			if (access.contains("ROLE_REPORT")) {
+			if (access.contains("ROLE_ADMIN")) {
 				return "/dashboard";
-			} else if (access.contains("ROLE_UPLOAD")) {
+			} else if (access.contains("ROLE_SERVER")) {
 				return "/dashboard";
 			} else if (access.contains("ROLE_USERS")) {
 				return "/dashboard";

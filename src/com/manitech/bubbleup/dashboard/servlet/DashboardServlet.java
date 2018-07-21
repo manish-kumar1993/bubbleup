@@ -20,9 +20,14 @@ public class DashboardServlet extends HttpServlet{
 		String username = request.getRemoteUser();
 		UserDataManager userManager = new UserDataManager();
 		UserDetail user = userManager.getUserByUserName(username);
-		CompanyManager companyManager = new CompanyManager();
-		List<Company> companyList = companyManager.getCompanyList(username);
-		request.setAttribute("companyList", companyList);
-		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/dashboard/dashboard.jsp").forward(request, response);
+		List<String> roles = userManager.geRolesByUserId(user.getUserId());
+		if (roles != null && roles.size() > 1) {
+			CompanyManager companyManager = new CompanyManager();
+			List<Company> companyList = companyManager.getCompanyList(username);
+			request.setAttribute("companyList", companyList);
+			request.getServletContext().getRequestDispatcher("/WEB-INF/pages/dashboard/dashboard.jsp").forward(request, response);
+		} else {
+			request.getServletContext().getRequestDispatcher("/WEB-INF/pages/dashboard/adminDashboard.jsp").forward(request, response);
+		}
 	}
 }
