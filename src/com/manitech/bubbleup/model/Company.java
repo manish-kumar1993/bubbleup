@@ -11,6 +11,7 @@ public class Company {
 	private String paymentStatus;
 	private String assignedTo;
 	private String serviceType;
+	private String status;
 	public String getId() {
 		return id;
 	}
@@ -70,6 +71,12 @@ public class Company {
 	}
 	public void setServiceType(String serviceType) {
 		this.serviceType = serviceType;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

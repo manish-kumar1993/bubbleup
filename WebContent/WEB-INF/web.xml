@@ -218,6 +218,30 @@
     <url-pattern>/saveCompany</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>EditCompany</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.EditCompanyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditCompany</servlet-name>
+    <url-pattern>/editCompany</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>deleteCompany</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.DeleteCompanyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deleteCompany</servlet-name>
+    <url-pattern>/deleteCompany</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>statusUpdate</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.UpdateCompanyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>statusUpdate</servlet-name>
+    <url-pattern>/statusUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>addService</servlet-name>
     <jsp-file>/WEB-INF/pages/service/addService.jsp</jsp-file>
   </servlet>

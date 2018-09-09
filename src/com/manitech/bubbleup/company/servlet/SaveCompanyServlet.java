@@ -52,7 +52,6 @@ public class SaveCompanyServlet extends HttpServlet {
 				response.sendRedirect("dashboard");
 			}else{
 				saveMessageAndError(request, "Company details added successfully","messages");
-				request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").forward(request, response);
 				response.sendRedirect("dashboard");
 			}
 		} else {

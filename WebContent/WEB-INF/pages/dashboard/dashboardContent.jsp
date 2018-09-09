@@ -35,12 +35,18 @@
 										<td><c:out value="${company.address}" /></td>
 										<td><c:out value="${company.paymentStatus}" /></td>
 										<td><c:out value="${company.assignedTo}" /></td>
-										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editUser?userId=${company.id}">
+										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editCompany?id=${company.id}">
 										        <i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										        <a style="cursor: pointer;" title="Edit" href="${ctx}/editUser?userId=${company.id}">
+										        <a style="cursor: pointer;" title="Delete" href="${ctx}/deleteCompany?id=${company.id}">
 										        <i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										        <a style="cursor: pointer;" title="Edit" href="${ctx}/editUser?userId=${company.id}">
-										        <i class="fa fa-circle"></i></a>
+										        <c:if test="${company.status=='ACTIVE'}">
+											        <a style="cursor: pointer;" title="Active" href="${ctx}/statusUpdate?id=${company.id}&status=INACTIVE">
+											        <i class="fa fa-check"></i></a>
+										        </c:if>
+										        <c:if test="${company.status=='INACTIVE'}">
+											        <a style="cursor: pointer;" title="Inactive" href="${ctx}/statusUpdate?id=${company.id}&status=ACTIVE">
+											        <i class="fa fa-times"></i></a>
+										        </c:if>
 										</td>
 									</tr>
 							</c:forEach>

@@ -34,6 +34,7 @@ public class CompanyManager {
 				company.setState(resultSet.getString("state"));
 				company.setTown(resultSet.getString("town"));
 				company.setVillage(resultSet.getString("village"));
+				company.setStatus(resultSet.getString("status"));
 				companyList.add(company);
 			}
 			resultSet.close();
@@ -49,8 +50,12 @@ public class CompanyManager {
 
 	public boolean saveCompanyDetails(String id, String name, String address, String country, String village,
 			String town, String state, String serviceType, String paymentStatus, String userName) {
-			StringBuffer query = new StringBuffer("insert into company (name,address,country,village,town,state,"
-					+ "serviceType,paymentStatus,createdBy,createdOn,id) values(?,?,?,?,?,?,?,?,?,?,?)");
+			StringBuffer query = new StringBuffer("");
+			if(!AppUtil.isNotEmpty(id)) {
+				query.append("insert into company (name,address,country,village,town,state,serviceType,paymentStatus,createdBy,createdOn,id) values(?,?,?,?,?,?,?,?,?,?,?)");
+			} else {
+				query.append("update  company set name=?,address=?,country=?,village=?,town=?,state=?,serviceType=?,paymentStatus=?,createdBy=?,createdOn=? where id=?");
+			}
 			boolean status = false;
 			Connection connection = DatabaseUtil.getDbConnection();
 			PreparedStatement prepareStatement = null;
@@ -83,5 +88,71 @@ public class CompanyManager {
 				DatabaseUtil.closeDBConnection(connection);
 			}
 		return status;
+	}
+
+	public Company getCompanyById(String id) {
+		Company company = new Company();
+		Statement statement = null;
+		String query = "select * from company where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			ResultSet resultSet = null;
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			
+			if (resultSet.next()) {
+				company.setAddress(resultSet.getString("address"));
+				company.setAssignedTo(resultSet.getString("assignedTo"));
+				company.setCountry(resultSet.getString("country"));
+				company.setId(resultSet.getString("id"));
+				company.setName(resultSet.getString("name"));
+				company.setPaymentStatus(resultSet.getString("paymentStatus"));
+				company.setState(resultSet.getString("state"));
+				company.setTown(resultSet.getString("town"));
+				company.setVillage(resultSet.getString("village"));
+			}
+			resultSet.close();
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return company;
+	}
+
+	public int deleteCompanyById(String id) {
+		Statement statement = null;
+		int records = 0;
+		String query = "delete  from company where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			records = statement.executeUpdate(query);
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return records;
+	}
+
+	public int updateCompanyById(String id, String status) {
+		Statement statement = null;
+		int records = 0;
+		String query = "update company set status = '"+status+"' where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			records = statement.executeUpdate(query);
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return records;
 	}
 }
