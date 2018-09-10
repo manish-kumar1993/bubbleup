@@ -18,6 +18,7 @@
 								<th style="font-weight: bold;">Country</th>
 								<th style="font-weight: bold;">State</th>
 								<th style="font-weight: bold;">Town</th>
+								<th style="font-weight: bold;">Village</th>
 								<th style="font-weight: bold;">Address</th>
 								<th style="font-weight: bold;">Payment</th>
 								<th style="font-weight: bold;">Assigned To</th>
@@ -32,6 +33,7 @@
 										<td><c:out value="${company.country}" /></td>
 										<td><c:out value="${company.state}" /></td>
 										<td><c:out value="${company.town}" /></td>
+										<td><c:out value="${company.village}" /></td>
 										<td><c:out value="${company.address}" /></td>
 										<td><c:out value="${company.paymentStatus}" /></td>
 										<td><c:out value="${company.assignedTo}" /></td>
