@@ -9,6 +9,7 @@
 				<form method="POST" id="formId" action="saveVehicle" onsubmit="return Validate()"autocomplete="off">
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-xs-12">
+						<input type="hidden" id="id" name="id" value="${requestScope.id}" />
 						<label>* Vehicle Name</label> <input type="text" id="address"
 							name="name" placeholder="Vehicle Name"
 							class="form-control" value="${requestScope.name}" maxlength="50" />

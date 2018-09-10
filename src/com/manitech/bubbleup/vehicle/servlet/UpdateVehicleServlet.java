@@ -1,4 +1,4 @@
-package com.manitech.bubbleup.services.servlet;
+package com.manitech.bubbleup.vehicle.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import com.manitech.bubbleup.manager.UserDataManager;
 import com.manitech.bubbleup.model.UserDetail;
 import com.manitech.bubbleup.util.AppUtil;
 
-public class UpdateServiceServlet extends HttpServlet{
+public class UpdateVehicleServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -28,16 +28,16 @@ public class UpdateServiceServlet extends HttpServlet{
 		if(userInfo != null) {
 			String id = request.getParameter("id");
 			String status = request.getParameter("status");
-			int records = new ServiceVehicleWorkerManager().updateServicesById(id,status);
+			int records = new ServiceVehicleWorkerManager().updateVehicleById(id,status);
 			if(records >0) {
 				if("INACTIVE".equals(status))
-					saveMessageAndError(request, "Service marked Inactive","messages");
+					saveMessageAndError(request, "Vehicle marked Inactive","messages");
 				else {
-					saveMessageAndError(request, "Service marked Active","messages");
+					saveMessageAndError(request, "Vehicle marked Active","messages");
 				}
 			}
 		}
-		response.sendRedirect("listService");
+		response.sendRedirect("listVehicles");
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void saveMessageAndError(HttpServletRequest request, String msg,String type) {

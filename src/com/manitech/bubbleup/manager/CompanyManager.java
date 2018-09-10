@@ -50,7 +50,7 @@ public class CompanyManager {
 
 	public boolean saveCompanyDetails(String id, String name, String address, String country, String village,
 			String town, String state, String serviceType, String paymentStatus, String userName) {
-			StringBuffer query = new StringBuffer("");
+			StringBuffer query = new StringBuffer();
 			if(!AppUtil.isNotEmpty(id)) {
 				query.append("insert into company (name,address,country,village,town,state,serviceType,paymentStatus,createdBy,createdOn,id) values(?,?,?,?,?,?,?,?,?,?,?)");
 			} else {

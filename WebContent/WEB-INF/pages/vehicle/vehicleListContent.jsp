@@ -27,12 +27,18 @@
 									<tr class="gradeX">
 										<td><c:out value="${vehicle.name}" /></td>
 										<td><c:out value="${vehicle.charges}" /></td>
-										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editVehicle?dd=${vehicle.id}">
+										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editVehicles?id=${vehicle.id}">
 										        <i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										        <a style="cursor: pointer;" title="Edit" href="${ctx}/editVehicle?dd=${vehicle.id}">
+										        <a style="cursor: pointer;" title="Edit" href="${ctx}/deleteVehicles?id=${vehicle.id}">
 										        <i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										        <a style="cursor: pointer;" title="Edit" href="${ctx}/editVehicle?dd=${vehicle.id}">
-										        <i class="fa fa-circle"></i></a>
+										        <c:if test="${vehicle.status=='ACTIVE'}">
+											        <a style="cursor: pointer;" title="Active" href="${ctx}/statusUpdateVehicles?id=${vehicle.id}&status=INACTIVE">
+											        <i class="fa fa-check"></i></a>
+										        </c:if>
+										        <c:if test="${vehicle.status=='INACTIVE'}">
+											        <a style="cursor: pointer;" title="Inactive" href="${ctx}/statusUpdateVehicles?id=${vehicle.id}&status=ACTIVE">
+											        <i class="fa fa-times"></i></a>
+										        </c:if>
 										</td>
 									</tr>
 								</c:forEach>

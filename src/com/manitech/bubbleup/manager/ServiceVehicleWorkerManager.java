@@ -44,7 +44,7 @@ public class ServiceVehicleWorkerManager {
 	}
 
 	public boolean saveServiceDetails(String id, String type, String description, String userName) {
-			StringBuffer query = new StringBuffer("");
+			StringBuffer query = new StringBuffer();
 			if(!AppUtil.isNotEmpty(id))
 				query = query.append("insert into services (type,description,createdBy,createdOn,id) values(?,?,?,?,?)");
 			else
@@ -148,6 +148,7 @@ public class ServiceVehicleWorkerManager {
 				vehicle.setName(resultSet.getString("name"));
 				vehicle.setCharges(resultSet.getString("charges"));
 				vehicle.setId(resultSet.getString("id"));
+				vehicle.setStatus(resultSet.getString("status"));
 				vehicleList.add(vehicle);
 			}
 			resultSet.close();
@@ -162,7 +163,12 @@ public class ServiceVehicleWorkerManager {
 	}
 
 	public boolean saveVehicleDetails(String id, String name, String charges, String userName) {
-			StringBuffer query = new StringBuffer("insert into vehicle (name,charges,createdBy,createdOn,id) values(?,?,?,?,?)");
+			StringBuffer query = new StringBuffer();
+			if(!AppUtil.isNotEmpty(id))
+				query.append("insert into vehicle (name,charges,createdBy,createdOn,id) values(?,?,?,?,?)");
+			else
+				query.append("update vehicle set name=?,charges=?,createdBy=?,createdOn=? where id=?");
+			
 			boolean status = false;
 			Connection connection = DatabaseUtil.getDbConnection();
 			PreparedStatement prepareStatement = null;
@@ -239,6 +245,67 @@ public class ServiceVehicleWorkerManager {
 		Statement statement = null;
 		int records = 0;
 		String query = "update services set status = '"+status+"' where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			records = statement.executeUpdate(query);
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return records;
+	}
+
+	public Vehicle getVehicleById(String id) {
+		Vehicle vehicle = new Vehicle();
+		Statement statement = null;
+		String query = "select * from vehicle where id ='"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			ResultSet resultSet = null;
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			
+			if(resultSet.next()) {
+				vehicle.setName(resultSet.getString("name"));
+				vehicle.setCharges(resultSet.getString("charges"));
+				vehicle.setId(resultSet.getString("id"));
+				vehicle.setStatus(resultSet.getString("status"));
+			}
+			resultSet.close();
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return vehicle;
+	}
+	
+	public int deleteVehicleById(String id) {
+		Statement statement = null;
+		int records = 0;
+		String query = "delete  from vehicle where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			records = statement.executeUpdate(query);
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return records;
+	}
+	
+	public int updateVehicleById(String id, String status) {
+		Statement statement = null;
+		int records = 0;
+		String query = "update vehicle set status = '"+status+"' where id = '"+id+"'";
 		Connection connection = DatabaseUtil.getDbConnection();
 		try {
 			statement = connection.createStatement();

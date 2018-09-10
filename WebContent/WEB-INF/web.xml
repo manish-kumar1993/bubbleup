@@ -337,6 +337,30 @@
     <servlet-name>ListVehicleServlet</servlet-name>
     <url-pattern>/listVehicles</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>EditVehicles</servlet-name>
+    <servlet-class>com.manitech.bubbleup.vehicle.servlet.EditVehicleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditVehicles</servlet-name>
+    <url-pattern>/editVehicles</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>deleteVehicles</servlet-name>
+    <servlet-class>com.manitech.bubbleup.vehicle.servlet.DeleteVehicleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deleteVehicles</servlet-name>
+    <url-pattern>/deleteVehicles</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>statusUpdateVehicles</servlet-name>
+    <servlet-class>com.manitech.bubbleup.vehicle.servlet.UpdateVehicleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>statusUpdateVehicles</servlet-name>
+    <url-pattern>/statusUpdateVehicles</url-pattern>
+  </servlet-mapping>
   <error-page>
     <error-code>500</error-code>
     <location>/error.jsp</location>
