@@ -27,12 +27,18 @@
 									<tr class="gradeX">
 										<td><c:out value="${service.type}" /></td>
 										<td><c:out value="${service.description}" /></td>
-										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editService?dd=${service.id}">
+										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editService?id=${service.id}">
 										        <i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										        <a style="cursor: pointer;" title="Edit" href="${ctx}/editService?dd=${service.id}">
+										        <a style="cursor: pointer;" title="Edit" href="${ctx}/deleteService?id=${service.id}">
 										        <i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										        <a style="cursor: pointer;" title="Edit" href="${ctx}/editService?dd=${service.id}">
-										        <i class="fa fa-circle"></i></a>
+										        <c:if test="${service.status=='ACTIVE'}">
+											        <a style="cursor: pointer;" title="Active" href="${ctx}/statusUpdateService?id=${service.id}&status=INACTIVE">
+											        <i class="fa fa-check"></i></a>
+										        </c:if>
+										        <c:if test="${service.status=='INACTIVE'}">
+											        <a style="cursor: pointer;" title="Inactive" href="${ctx}/statusUpdateService?id=${service.id}&status=ACTIVE">
+											        <i class="fa fa-times"></i></a>
+										        </c:if>
 										</td>
 									</tr>
 								</c:forEach>

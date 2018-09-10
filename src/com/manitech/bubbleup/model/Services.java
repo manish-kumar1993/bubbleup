@@ -4,6 +4,7 @@ public class Services {
 	private String id;
 	private String type;
 	private String description;
+	private String status;
 	public String getId() {
 		return id;
 	}
@@ -21,6 +22,12 @@ public class Services {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

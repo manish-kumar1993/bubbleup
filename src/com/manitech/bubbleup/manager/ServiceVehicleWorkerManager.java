@@ -29,6 +29,7 @@ public class ServiceVehicleWorkerManager {
 				service.setType(resultSet.getString("type"));
 				service.setDescription(resultSet.getString("description"));
 				service.setId(resultSet.getString("id"));
+				service.setStatus(resultSet.getString("status"));
 				serviceList.add(service);
 			}
 			resultSet.close();
@@ -43,7 +44,11 @@ public class ServiceVehicleWorkerManager {
 	}
 
 	public boolean saveServiceDetails(String id, String type, String description, String userName) {
-			StringBuffer query = new StringBuffer("insert into services (type,description,createdBy,createdOn,id) values(?,?,?,?,?)");
+			StringBuffer query = new StringBuffer("");
+			if(!AppUtil.isNotEmpty(id))
+				query = query.append("insert into services (type,description,createdBy,createdOn,id) values(?,?,?,?,?)");
+			else
+				query = query.append("update services set type=?,description=?,createdBy=?,createdOn=? where id=?");
 			boolean status = false;
 			Connection connection = DatabaseUtil.getDbConnection();
 			PreparedStatement prepareStatement = null;
@@ -184,5 +189,66 @@ public class ServiceVehicleWorkerManager {
 				DatabaseUtil.closeDBConnection(connection);
 			}
 		return status;
+	}
+
+	public Services getServiceById(String id) {
+		Services service = new Services();
+		Statement statement = null;
+		String query = "select * from services where id ='"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			ResultSet resultSet = null;
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(query);
+			
+			if(resultSet.next()) {
+				service.setType(resultSet.getString("type"));
+				service.setDescription(resultSet.getString("description"));
+				service.setId(resultSet.getString("id"));
+				service.setStatus(resultSet.getString("status"));
+			}
+			resultSet.close();
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return service;
+	}
+
+	public int deleteServiceById(String id) {
+		Statement statement = null;
+		int records = 0;
+		String query = "delete  from services where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			records = statement.executeUpdate(query);
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return records;
+	}
+	
+	public int updateServicesById(String id, String status) {
+		Statement statement = null;
+		int records = 0;
+		String query = "update services set status = '"+status+"' where id = '"+id+"'";
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			records = statement.executeUpdate(query);
+			statement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return records;
 	}
 }

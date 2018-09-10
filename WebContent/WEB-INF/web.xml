@@ -266,6 +266,30 @@
     <url-pattern>/listService</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>EditService</servlet-name>
+    <servlet-class>com.manitech.bubbleup.services.servlet.EditServiceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditService</servlet-name>
+    <url-pattern>/editService</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>deleteService</servlet-name>
+    <servlet-class>com.manitech.bubbleup.services.servlet.DeleteServiceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>deleteService</servlet-name>
+    <url-pattern>/deleteService</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>statusUpdateService</servlet-name>
+    <servlet-class>com.manitech.bubbleup.services.servlet.UpdateServiceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>statusUpdateService</servlet-name>
+    <url-pattern>/statusUpdateService</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>addWorker</servlet-name>
     <jsp-file>/WEB-INF/pages/worker/addWorker.jsp</jsp-file>
   </servlet>

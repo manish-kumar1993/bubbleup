@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.manitech.bubbleup.manager.ServiceVehicleWorkerManager;
-import com.manitech.bubbleup.manager.UserDataManager;
 import com.manitech.bubbleup.model.Services;
-import com.manitech.bubbleup.model.UserDetail;
 
 public class ListServicesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

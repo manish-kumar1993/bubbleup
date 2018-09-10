@@ -9,9 +9,10 @@
 				<form method="POST" id="formId" action="saveServices" onsubmit="return Validate()"autocomplete="off">
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-xs-12">
+						<input type="hidden" id="id" name="id" value="${requestScope.id}" />
 						<label>* Service Type</label> <input type="text" id="address"
 							name="service" placeholder="Service Type"
-							class="form-control" value="${requestScope.serviceType}" maxlength="50" />
+							class="form-control" value="${requestScope.type}" maxlength="50" />
 <!-- 							<label id="ccId" class="errormsg">Please enter Address</label> -->
 <!-- 							<label id="ccId1" class="errormsg">Please enter valid address</label> <br> -->
 					</div>
