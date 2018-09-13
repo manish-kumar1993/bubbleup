@@ -3,10 +3,24 @@
 	<div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading clearfix">
-				<h3 class="panel-title">Company List</h3>
-				<div align="right">
-					<a  href="addCompany" title="Add Company" class="btn btn-info">Add Company</a>
+			<div class="panel-heading clearfix row">
+				<div class="topnav">
+					<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+						<h3 class="panel-title marginTop8px">Company List</h3>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-12 col-lg-4">
+							<div class="search-container">
+							    <form action="${ctx}/dashboard" method="post">
+							      <input type="text" placeholder="Search.." name="query" id="query">
+							      <button type="submit"><i class="fa fa-search"></i></button>
+							    </form>
+							</div>
+						</div>
+					<div class="col-md-2 col-sm-2 col-xs-12 col-lg-2 marginTop8px">
+						<div align="right">
+							<a  href="addCompany" title="Add Company" class="btn btn-info">Add Company</a>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="panel-body" style="padding: 10px; font-size: 10px;">

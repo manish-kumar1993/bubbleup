@@ -14,20 +14,28 @@ import com.manitech.bubbleup.model.Company;
 import com.manitech.bubbleup.model.UserDetail;
 
 public class DashboardServlet extends HttpServlet{
+	String query;
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String username = request.getRemoteUser();
+		String query = request.getParameter("query");
 		UserDataManager userManager = new UserDataManager();
 		UserDetail user = userManager.getUserByUserName(username);
 		List<String> roles = userManager.geRolesByUserId(user.getUserId());
 		if (roles != null && roles.size() > 1) {
 			CompanyManager companyManager = new CompanyManager();
-			List<Company> companyList = companyManager.getCompanyList(username);
+			List<Company> companyList = companyManager.getCompanyList(username,query);
 			request.setAttribute("companyList", companyList);
 			request.getServletContext().getRequestDispatcher("/WEB-INF/pages/dashboard/dashboard.jsp").forward(request, response);
 		} else {
 			request.getServletContext().getRequestDispatcher("/WEB-INF/pages/dashboard/adminDashboard.jsp").forward(request, response);
 		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		doGet(request, response);
 	}
 }

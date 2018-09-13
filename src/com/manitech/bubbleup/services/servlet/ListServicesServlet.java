@@ -13,12 +13,12 @@ import com.manitech.bubbleup.model.Services;
 
 public class ListServicesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String query = request.getParameter("query");
 		ServiceVehicleWorkerManager serviceVehicleWorkerManager = new ServiceVehicleWorkerManager();
 		String totalCount="0";
-		List<Services> services = serviceVehicleWorkerManager.getServiceList("");
+		List<Services> services = serviceVehicleWorkerManager.getServiceList(query);
 		if(services !=null && services.size() >0){
 			totalCount=services.size()+"";
 		}
@@ -27,5 +27,9 @@ public class ListServicesServlet extends HttpServlet {
 		request.setAttribute("totalCount", totalCount);
 
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/service/serviceList.jsp").forward(request, response);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 }

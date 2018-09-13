@@ -4,23 +4,36 @@
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading clearfix">
-				<h3 class="panel-title">List of Services</h3>
-				&nbsp;&nbsp;&nbsp;&nbsp;  <span> 
-				         <c:if test="${requestScope.services.size()>0}">
-						(   ${requestScope.totalCount} Services )
-							</c:if> 
-				</span>
+				<div class="topnav">
+					<div class="col-lg-8 marginTop8px">
+						<h3 class="panel-title">List of Services
+							<span> 
+						         <c:if test="${requestScope.services.size()>0}">
+									(   ${requestScope.totalCount} Services )
+								</c:if> 
+							</span>
+						</h3>
+					</div>
+					<div class="col-lg-4">
+						<div class="search-container">
+						    <form action="${ctx}/listService" method="post">
+						      <input type="text" placeholder="Search.." name="query" id="query">
+						      <button type="submit"><i class="fa fa-search"></i></button>
+						    </form>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="panel-body" style="padding: 10px; font-size: 10px;">
 				<div class="table-responsive">
 					<table class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th style="font-weight: bold;">Type</th>
-								<th style="font-weight: bold;">Description</th>
-								<th style="font-weight: bold;">Action</th>
-							</tr>
-						</thead>
+							<thead>
+								<tr>
+									<th style="font-weight: bold;">Type</th>
+									<th style="font-weight: bold;">Description</th>
+									<th style="font-weight: bold;">Action</th>
+								</tr>
+							</thead>
 						<tbody>
 							<c:if test="${requestScope.services!=null}">
 								<c:forEach var="service" items="${requestScope.services}">

@@ -14,10 +14,12 @@ import com.manitech.bubbleup.util.AppUtil;
 import com.manitech.bubbleup.util.DatabaseUtil;
 
 public class ServiceVehicleWorkerManager {
-	public List<Services> getServiceList(String userName) {
+	public List<Services> getServiceList(String serviceName) {
 		List<Services> serviceList = new ArrayList<>();
 		Statement statement = null;
-		String query = "select * from services";
+		String query = "select * from services where 1=1";
+		if(AppUtil.isNotEmpty(serviceName))
+			query += " and type like '%"+serviceName+"%'";
 		Connection connection = DatabaseUtil.getDbConnection();
 		try {
 			ResultSet resultSet = null;
@@ -133,10 +135,13 @@ public class ServiceVehicleWorkerManager {
 			}
 		return status;
 	}*/
-	public List<Vehicle> getVehicleList(String userName) {
+	public List<Vehicle> getVehicleList(String vehicleName) {
 		List<Vehicle> vehicleList = new ArrayList<>();
 		Statement statement = null;
-		String query = "select * from vehicle";
+		String query = "select * from vehicle where 1 = 1";
+		if(AppUtil.isNotEmpty(vehicleName))
+			query += " and name like '%"+vehicleName+"%'";
+		
 		Connection connection = DatabaseUtil.getDbConnection();
 		try {
 			ResultSet resultSet = null;

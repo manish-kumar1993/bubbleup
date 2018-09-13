@@ -16,12 +16,12 @@ import com.manitech.bubbleup.model.Vehicle;
 
 public class ListVehicleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String query = request.getParameter("query");
 		ServiceVehicleWorkerManager serviceVehicleWorkerManager = new ServiceVehicleWorkerManager();
 		String totalCount="0";
-		List<Vehicle> vehicles = serviceVehicleWorkerManager.getVehicleList("");
+		List<Vehicle> vehicles = serviceVehicleWorkerManager.getVehicleList(query);
 		if(vehicles !=null && vehicles.size() >0){
 			totalCount=vehicles.size()+"";
 		}
@@ -29,5 +29,9 @@ public class ListVehicleServlet extends HttpServlet {
 		request.setAttribute("totalCount", totalCount);
 
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/vehicle/vehicleList.jsp").forward(request, response);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 }

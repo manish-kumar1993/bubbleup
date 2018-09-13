@@ -16,11 +16,10 @@ public class ListUserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		String query = request.getParameter("query");
 		UserDataManager userDataManager = new UserDataManager();
-//		String clientId = AppUtil.getClientId(request);
 		String totalCount="0";
-		List<UserDetail> users = userDataManager.getUsers(null, null);
+		List<UserDetail> users = userDataManager.getUsers(null, query);
 		if(users !=null && users.size() >0){
 			totalCount=users.size()+"";
 		}
@@ -29,5 +28,9 @@ public class ListUserServlet extends HttpServlet {
 		request.setAttribute("totalCount", totalCount);
 
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/userList.jsp").forward(request, response);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 }

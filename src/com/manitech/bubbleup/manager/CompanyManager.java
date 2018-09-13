@@ -13,10 +13,12 @@ import com.manitech.bubbleup.util.AppUtil;
 import com.manitech.bubbleup.util.DatabaseUtil;
 
 public class CompanyManager {
-	public List<Company> getCompanyList(String userName) {
+	public List<Company> getCompanyList(String userName, String companyName) {
 		List<Company> companyList = new ArrayList<>();
 		Statement statement = null;
-		String query = "select * from company";
+		String query = "select * from company where 1=1";
+		if(AppUtil.isNotEmpty(companyName))
+			query += " and name like'%"+companyName+"%'";
 		Connection connection = DatabaseUtil.getDbConnection();
 		try {
 			ResultSet resultSet = null;

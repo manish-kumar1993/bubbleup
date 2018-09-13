@@ -300,12 +300,15 @@ public class UserDataManager {
 		return userDetail;
 	}
 
-	public List<UserDetail> getUsers(String userId, String clientId) {
+	public List<UserDetail> getUsers(String userId, String name) {
 		List<UserDetail> userDetails = new ArrayList<UserDetail>();
 		Connection connection = DatabaseUtil.getDbConnection();
 		PreparedStatement preparedStatement = null;
 		StringBuffer stringBuffer = new StringBuffer(
-				"select u.id,u.username,u.mobile,u.token,u.password,u.status,u.firstName,u.lastName, " + "umr.masterRoleId,mr.masterRoleName " + "from user as u left join userMasterRole as umr on umr.userId=u.id left join masterRole as mr on mr.masterRoleId=umr.masterRoleId ");
+				"select u.id,u.username,u.mobile,u.token,u.password,u.status,u.firstName,u.lastName, " 
+						+ "umr.masterRoleId,mr.masterRoleName " + "from user as u left join userMasterRole as umr on umr.userId=u.id left join masterRole as mr on mr.masterRoleId=umr.masterRoleId where 1=1");
+		if(AppUtil.isNotEmpty(name))
+			stringBuffer.append(" and u.firstName like '%"+name+"%' or u.lastName like '%"+name+"%'");
 		try {
 			preparedStatement = connection.prepareStatement(stringBuffer.toString());
 			ResultSet resultSet = preparedStatement.executeQuery();
