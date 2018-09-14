@@ -25,6 +25,8 @@ public final class Constants {
 	public static final String APP_NAME = "bubbleup";
 	public static final String IMAGES_DIRECTORY = "images";
 	public static final String Community = "COMMUNITY";
+	public static final String ROLE_SERVER_ADMIN = "ROLE_SERVER_ADMIN";
+	public static final String ROLE_COMPANY_ADMIN = "ROLE_COMPANY_ADMIN";
 
 	// Windows file location
 	static String UPLOAD_DIR_WINDOWS = "c:/" + APP_NAME;

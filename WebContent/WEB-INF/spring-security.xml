@@ -17,15 +17,15 @@
 		<intercept-url pattern="/login*" access="permitAll" />
 		<intercept-url pattern="/logout*" access="permitAll" />
 		<intercept-url pattern="/static/**" access="permitAll" />
-		<intercept-url pattern="/reports**" access="hasRole('ROLE_REPORT')" />
-		<intercept-url pattern="/upload**" access="hasRole('ROLE_UPLOAD')" />
-		<intercept-url pattern="/masterRole**" access="hasRole('ROLE_USER_ROLE')" />
-		<intercept-url pattern="/viewPermission**" access="hasRole('ROLE_USER_ROLE')" />
-		<intercept-url pattern="/listUser**" access="hasRole('ROLE_USERS')" />
-		<intercept-url pattern="/addUser**" access="hasRole('ROLE_USERS')" />
-		<intercept-url pattern="/saveUser**" access="hasRole('ROLE_USERS')" />
-		<intercept-url pattern="/editUser**" access="hasRole('ROLE_USERS')" />
-		<intercept-url pattern="/downloadOrderFormExcel**" access="hasRole('ROLE_REPORT')" />
+		<intercept-url pattern="/reports**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/upload**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/masterRole**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/viewPermission**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/listUser**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/addUser**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/saveUser**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/editUser**" access="hasRole('ROLE_SERVER_ADMIN')" />
+		<intercept-url pattern="/downloadOrderFormExcel**" access="hasRole('ROLE_SERVER_ADMIN')" />
 		
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<!-- access denied page -->
@@ -40,7 +40,7 @@
 		<authentication-provider>
 			<password-encoder ref="passwordEncoder" />
 			<jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, enabled from user where username=?"
-				authorities-by-username-query="select username,roleName from role r inner join masterRoleAccess mra  on mra.roleId = r.roleId inner join  userMasterRole umr on  mra.masterRoleId = umr.masterRoleId  inner join  user u on umr.userId=u.id  where u.username=? " />
+					authorities-by-username-query="select username,roleName from role r inner join user_role ur  on ur.role_id = r.roleId inner join  user u on ur.user_id=u.id  where u.username=?" />
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>

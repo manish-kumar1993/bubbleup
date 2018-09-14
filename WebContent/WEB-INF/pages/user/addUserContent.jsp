@@ -13,11 +13,11 @@
 						<div class="col-md-12" style="padding: 0px;">
 							<select id="role_id" name="roleId" onchange="selectedRole(this);"
 								class="form-control">
-								<c:if test="${requestScope.masterRoleList.size()>0}">
-									<c:forEach var="masterRoleList" items="${requestScope.masterRoleList}">
-										<option value="${masterRoleList.masterRoleId}"
-											${fn:contains(masterRoleId,masterRoleList.masterRoleId)  ? 'selected="selected"' : ''}><c:out
-												value="${masterRoleList.masterRoleName}" /></option>
+								<c:if test="${requestScope.roleList.size()>0}">
+									<c:forEach var="role" items="${requestScope.roleList}">
+										<option value="${role.roleId}"
+											${fn:contains(roleId,role.roleId)  ? 'selected="selected"' : ''}><c:out
+												value="${role.roleName}" /></option>
 									</c:forEach>
 								</c:if>
 							</select>

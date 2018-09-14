@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.manitech.bubbleup.Constants;
 import com.manitech.bubbleup.manager.CompanyManager;
 import com.manitech.bubbleup.manager.UserDataManager;
 import com.manitech.bubbleup.model.Company;
@@ -22,8 +23,8 @@ public class DashboardServlet extends HttpServlet{
 		String query = request.getParameter("query");
 		UserDataManager userManager = new UserDataManager();
 		UserDetail user = userManager.getUserByUserName(username);
-		List<String> roles = userManager.geRolesByUserId(user.getUserId());
-		if (roles != null && roles.size() > 1) {
+		String roleName = userManager.geRolesByUserId(user.getUserId());
+		if (Constants.ROLE_SERVER_ADMIN.equals(roleName)) {
 			CompanyManager companyManager = new CompanyManager();
 			List<Company> companyList = companyManager.getCompanyList(username,query);
 			request.setAttribute("companyList", companyList);

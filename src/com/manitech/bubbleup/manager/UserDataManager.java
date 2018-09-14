@@ -6,22 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.manitech.bubbleup.model.MasterRole;
-import com.manitech.bubbleup.model.Role;
 import com.manitech.bubbleup.model.UserDetail;
+import com.manitech.bubbleup.model.Role;
 import com.manitech.bubbleup.util.AppUtil;
 import com.manitech.bubbleup.util.DatabaseUtil;
 
 public class UserDataManager {
 	public boolean saveUserDetails(String userId, String firstName, String lastName, String username, String password, String mobileNo, 
-			String saltedPass, String status, String enabled, String loggedInUser, String masterRoleId) {
+			String saltedPass, String status, String enabled, String loggedInUser, String roleId) {
 		String token = null;
 		String saveQuery = null;
 		boolean isUpdateQuery = false;
@@ -33,7 +31,7 @@ public class UserDataManager {
 			saveQuery = "update  user set firstName=?,lastName=?,username=?,password=?,mobile=?,status=?,enabled=?,updatedDate=?,updatedBy=? where id=?";
 			isUpdateQuery = true;
 		} else {
-			saveQuery = "insert into user (firstName,lastName,username,password,mobile,status,enabled,createdDate,createdBy,id,token) values(?,?,?,?,?,?,?,?,?,?,?)";
+			saveQuery = "insert into user (firstName,lastName,username,password,mobile,status,enabled,createdDate,createdBy,id,token,userType) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		}
 
 		Connection connection = DatabaseUtil.getDbConnection();
@@ -67,14 +65,18 @@ public class UserDataManager {
 				userId = (UUID.randomUUID() + "");
 				prepareStatement.setString(10, userId);
 				prepareStatement.setString(11, token);
+				if(AppUtil.isNotEmpty(roleId))
+					prepareStatement.setString(12, "USER");
+				else
+					prepareStatement.setString(12, "WORKER");
 			}
 			int x = prepareStatement.executeUpdate();
-			if (x > 0) {
+			if (x > 0 && AppUtil.isNotEmpty(roleId)) {
 				 
 				if (isUpdateQuery) {
-					deleteExistingRoleFromUserMasterRole(userId);
+					deleteExistingRoleFromUserRole(userId);
 				}
-				 userMasterRoleTableInsertion(userId, masterRoleId);
+				 userRoleTableInsertion(userId, roleId);
 				 update=true;
 			}
 		} catch (Exception e) {
@@ -90,15 +92,15 @@ public class UserDataManager {
 	
  
 
-	private int userMasterRoleTableInsertion(String userId, String masterRoleId) {
+	private int userRoleTableInsertion(String userId, String roleId) {
 		PreparedStatement prepareStatement = null;
 		Connection connection = DatabaseUtil.getDbConnection();
 		int insert = 0;
-		String userRoleSql = "insert into userMasterRole (userMasterRoleId,userId,masterRoleId) values(uuid(),?,?)";
+		String userRoleSql = "insert into user_role (role_id,user_id) values(?,?)";
 		try {
 			prepareStatement = connection.prepareStatement(userRoleSql);
-			prepareStatement.setString(1, userId);
-			prepareStatement.setString(2, masterRoleId);
+			prepareStatement.setString(1, roleId);
+			prepareStatement.setString(2, userId);
 			insert = prepareStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,11 +111,11 @@ public class UserDataManager {
 		return insert;
 	}
 
-	private void deleteExistingRoleFromUserMasterRole(String userId) {
+	private void deleteExistingRoleFromUserRole(String userId) {
 		Connection connection = DatabaseUtil.getDbConnection();
 		PreparedStatement prepareStatement = null;
 		try {
-			prepareStatement = connection.prepareStatement("delete from userMasterRole where userId=?");
+			prepareStatement = connection.prepareStatement("delete from user_role where userId=?");
 			prepareStatement.setString(1, userId);
 			prepareStatement.executeUpdate();
 
@@ -265,8 +267,8 @@ public class UserDataManager {
 		String selectQuery = null;
 		UserDetail userDetail = null;
 		if (AppUtil.isNotEmpty(userId)) {
-			selectQuery = "select u.id,u.username,u.password,u.token,u.status,u.firstName,u.lastName,u.mobile,u.enabled,mr.masterRoleName,mr.masterRoleId from user as u left join userMasterRole as umr "
-					+ "on umr.userId=u.id left join masterRole as mr on mr.masterRoleId=umr.masterRoleId where  id=? ";
+			selectQuery = "select u.id,u.username,u.password,u.token,u.status,u.firstName,u.lastName,u.mobile,u.enabled,r.roleId,r.roleName from user "
+					+ "as u inner join user_role as ur on ur.user_id=u.id inner join role as r on r.roleId=ur.role_id where  id=? ";
 			Connection connection = DatabaseUtil.getDbConnection();
 			PreparedStatement prepareStatement = null;
 			try {
@@ -286,8 +288,8 @@ public class UserDataManager {
 					userDetail.setStatus(resultSet.getString("u.status"));
 					userDetail.setMobile(resultSet.getString("u.mobile"));
 					userDetail.setEnabled(resultSet.getString("u.enabled"));
-					userDetail.setMasterRoleName(resultSet.getString("mr.masterRoleName"));
-					userDetail.setMasterRoleId(resultSet.getString("mr.masterRoleId"));
+					userDetail.setMasterRoleName(resultSet.getString("r.roleName"));
+					userDetail.setMasterRoleId(resultSet.getString("r.roleId"));
 
 				}
 			} catch (SQLException e) {
@@ -305,8 +307,8 @@ public class UserDataManager {
 		Connection connection = DatabaseUtil.getDbConnection();
 		PreparedStatement preparedStatement = null;
 		StringBuffer stringBuffer = new StringBuffer(
-				"select u.id,u.username,u.mobile,u.token,u.password,u.status,u.firstName,u.lastName, " 
-						+ "umr.masterRoleId,mr.masterRoleName " + "from user as u left join userMasterRole as umr on umr.userId=u.id left join masterRole as mr on mr.masterRoleId=umr.masterRoleId where 1=1");
+				"select u.id,u.username,u.mobile,u.token,u.password,u.status,u.firstName,u.lastName,r.roleId,r.roleDescription from user as u inner join user_role  "
+				+ "as ur on ur.user_id=u.id inner join role as r on r.roleId=ur.role_id where 1=1");
 		if(AppUtil.isNotEmpty(name))
 			stringBuffer.append(" and u.firstName like '%"+name+"%' or u.lastName like '%"+name+"%'");
 		try {
@@ -322,8 +324,8 @@ public class UserDataManager {
 				userDetail.setStatus(resultSet.getString("u.status"));
 				userDetail.setFirstName(resultSet.getString("u.firstName"));
 				userDetail.setLastName(resultSet.getString("u.lastName"));
-				userDetail.setMasterRoleId(resultSet.getString("umr.masterRoleId"));
-				userDetail.setMasterRoleName(resultSet.getString("mr.masterRoleName"));
+				userDetail.setMasterRoleId(resultSet.getString("r.roleId"));
+				userDetail.setMasterRoleName(resultSet.getString("r.roleDescription"));
 				userDetails.add(userDetail);
 			}
 			resultSet.close();
@@ -366,19 +368,18 @@ public class UserDataManager {
 
 
 
-	public List<String> geRolesByUserId(String userId) {
+	public String geRolesByUserId(String userId) {
 		String selectQuery = null;
-		List<String> roleList = new ArrayList<>();
+		String roleName = "";
 		if (AppUtil.isNotEmpty(userId)) {
-			selectQuery = "select roleName from role where roleId in (select roleId from masterroleaccess where masterRoleId = "
-					+ "(SELECT masterRoleId FROM usermasterrole WHERE userId = '"+ userId +"'))";
+			selectQuery = "select roleName from role r inner join user_role ur  on ur.role_id = r.roleId inner join  user u on ur.user_id=u.id  where u.id='"+ userId +"'";
 			Connection connection = DatabaseUtil.getDbConnection();
 			PreparedStatement prepareStatement = null;
 			try {
 				prepareStatement = connection.prepareStatement(selectQuery);
 				ResultSet resultSet = prepareStatement.executeQuery();
-				while (resultSet.next()) {
-					roleList.add(resultSet.getString("roleName"));
+				if (resultSet.next()) {
+					roleName = resultSet.getString("roleName");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -386,6 +387,36 @@ public class UserDataManager {
 				DatabaseUtil.closePreparedStatement(prepareStatement);
 				DatabaseUtil.closeDBConnection(connection);
 			}
+		}
+		return roleName;
+	}
+
+
+
+
+
+	public List<Role> getRoles() {
+		Statement statement = null;
+		StringBuilder roleSql = new StringBuilder("select * from role ");
+		roleSql.append("order by roleName ");
+		List<Role> roleList = new ArrayList<>();
+		Connection connection = DatabaseUtil.getDbConnection();
+		try {
+			statement = connection.createStatement();
+			ResultSet rsRole = statement.executeQuery(roleSql.toString());
+			while (rsRole.next()) {
+				Role role = new Role();
+				role.setRoleId(rsRole.getString("roleId"));
+				role.setRoleName(rsRole.getString("roleName"));
+				role.setRoleDescription(rsRole.getString("roleDescription"));
+				roleList.add(role);
+			}
+			rsRole.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closeDBConnection(connection);
+			DatabaseUtil.closeStatement(statement);
 		}
 		return roleList;
 	}

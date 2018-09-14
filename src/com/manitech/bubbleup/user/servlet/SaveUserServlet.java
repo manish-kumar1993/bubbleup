@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.manitech.bubbleup.manager.UserDataManager;
-import com.manitech.bubbleup.model.MasterRole;
+import com.manitech.bubbleup.model.Role;
 import com.manitech.bubbleup.model.UserDetail;
 import com.manitech.bubbleup.util.AppUtil;
 
@@ -27,7 +27,7 @@ public class SaveUserServlet extends HttpServlet {
 			userInfo = userDataManager.getUserByUserName(loggedInUser);
 		}
 
-		List<MasterRole> masterRoleList = userDataManager.getMasterRoles();
+		List<Role> roleList = userDataManager.getRoles();
 
 		String userId = request.getParameter("userId");
 		String saltedPass = request.getParameter("saltedPass");
@@ -36,7 +36,7 @@ public class SaveUserServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String mobileNo = request.getParameter("mobileNo");
-		String masterRoleId = request.getParameter("roleId");
+		String roleId = request.getParameter("roleId");
 		String status = request.getParameter("status");
 		String enabled = request.getParameter("enabled");
 
@@ -44,10 +44,10 @@ public class SaveUserServlet extends HttpServlet {
 		request.setAttribute("lastName", lastName);
 		request.setAttribute("username", username);
 		request.setAttribute("mobileNo", mobileNo);
-		request.setAttribute("masterRoleList", masterRoleList);
+		request.setAttribute("roleList", roleList);
 		request.setAttribute("enabled", enabled);
 		request.setAttribute("status", status);
-		request.setAttribute("masterRoleId", masterRoleId);
+		request.setAttribute("roleId", roleId);
 		
 
 		boolean isUserAvailable = userDataManager.isUsernameExist(username, userId);
@@ -57,7 +57,7 @@ public class SaveUserServlet extends HttpServlet {
 			return;
 		} else {
 			boolean savedStaus = userDataManager.saveUserDetails(userId, firstName, lastName, username, password,
-					mobileNo,  saltedPass, status, enabled, userInfo.getId(),masterRoleId);
+					mobileNo,  saltedPass, status, enabled, userInfo.getId(),roleId);
 			if(savedStaus){
 				saveMessageAndError(request, "User updated successfully","messages");
 					response.sendRedirect("listUser");

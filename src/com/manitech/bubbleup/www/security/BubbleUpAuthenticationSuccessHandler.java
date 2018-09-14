@@ -17,6 +17,7 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.manitech.bubbleup.Constants;
 import com.manitech.bubbleup.manager.UserDataManager;
 import com.manitech.bubbleup.util.AppUtil;
 
@@ -85,18 +86,13 @@ public class BubbleUpAuthenticationSuccessHandler implements AuthenticationSucce
 		if (authorities != null) {
 			String access = authorities.toString();
 			// for (GrantedAuthority grantedAuthority : authorities) {
-			if (access.contains("ROLE_ADMIN")) {
+			if (access.contains(Constants.ROLE_SERVER_ADMIN)) {
 				return "/dashboard";
-			} else if (access.contains("ROLE_SERVER")) {
+			} else if (access.contains(Constants.ROLE_COMPANY_ADMIN)) {
 				return "/dashboard";
-			} else if (access.contains("ROLE_USERS")) {
-				return "/dashboard";
-//			}  else if (access.contains("ROLE_USER_ROLE")) {
-//				return "/masterRole";
 			} else {
 				throw new IllegalStateException();
 			}
-			// }
 		}
 		
 		

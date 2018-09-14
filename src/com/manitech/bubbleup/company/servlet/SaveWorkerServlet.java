@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.manitech.bubbleup.manager.UserDataManager;
-import com.manitech.bubbleup.model.MasterRole;
 import com.manitech.bubbleup.model.UserDetail;
 import com.manitech.bubbleup.util.AppUtil;
 
@@ -26,9 +25,6 @@ public class SaveWorkerServlet extends HttpServlet {
 		if (AppUtil.isNotEmpty(loggedInUser)) {
 			userInfo = userDataManager.getUserByUserName(loggedInUser);
 		}
-
-		List<MasterRole> masterRoleList = userDataManager.getMasterRoles();
-
 		String userId = request.getParameter("userId");
 		String saltedPass = request.getParameter("saltedPass");
 		String firstName = request.getParameter("firstName");
@@ -39,7 +35,6 @@ public class SaveWorkerServlet extends HttpServlet {
 		request.setAttribute("firstName", firstName);
 		request.setAttribute("username", username);
 		request.setAttribute("mobileNo", mobileNo);
-		request.setAttribute("masterRoleList", masterRoleList);
 		
 
 		boolean isUserAvailable = userDataManager.isUsernameExist(username, userId);
@@ -55,7 +50,7 @@ public class SaveWorkerServlet extends HttpServlet {
 					response.sendRedirect("workersList");
 			}else{
 				saveMessageAndError(request, "There was some error. Please try again.","errors");
-				request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").forward(request, response);
+				request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addWorker.jsp").forward(request, response);
 			}
 			
 		}

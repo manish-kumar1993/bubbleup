@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.manitech.bubbleup.manager.UserDataManager;
-import com.manitech.bubbleup.model.MasterRole;
+import com.manitech.bubbleup.model.Role;
 import com.manitech.bubbleup.model.UserDetail;
 
 public class EditUserServlet extends HttpServlet {
@@ -25,11 +25,11 @@ public class EditUserServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		UserDataManager userDataManager = new UserDataManager();
 		UserDetail user = userDataManager.getUserByUserId(userId);
-		List<MasterRole> masterRoleList = userDataManager.getMasterRoles();
-		String masterRoleId = user.getMasterRoleId();
-		request.setAttribute("masterRoleId", masterRoleId);
+		List<Role> roleList = userDataManager.getRoles();
+		String roleId = user.getMasterRoleId();
+		request.setAttribute("roleId",roleId);
 		request.setAttribute("user", user);
-		request.setAttribute("masterRoleList", masterRoleList);
+		request.setAttribute("roleList", roleList);
 		
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/editUser.jsp").forward(request, response);
 	}

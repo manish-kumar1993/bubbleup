@@ -2,10 +2,13 @@
 
 <!-- Main navigation -->
 		<ul id="side-nav" class="main-menu navbar-collapse collapse">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ROLE_SERVER_ADMIN')">
 			<li class=""><a href="${ctx}/dashboard"><i class="icon-gauge"></i><span class="title">Dashboard</span></a>	</li>
 		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ROLE_COMPANY_ADMIN')">
+			<li class=""><a href="${ctx}/dashboard"><i class="icon-gauge"></i><span class="title">Dashboard</span></a>	</li>
+		</sec:authorize>
+		<sec:authorize access="hasRole('ROLE_SERVER_ADMIN')">
 			<li class="has-sub"><a href="#"><i class="fa fa-users"></i><span class="title">Users</span></a>
 				<ul class="nav collapse">
 					<li class=""><a href="${ctx}/listUser"><i class="fa fa-users"></i><span class="title">User List</span></a></li>
@@ -13,7 +16,7 @@
 				</ul>
 			</li>
 		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ROLE_SERVER_ADMIN')">
 			<li class="has-sub"><a href="#"><i class="fa fa-wrench"></i><span class="title">Service</span></a>
 				<ul class="nav collapse">
 					<li class=""><a href="${ctx}/listService"><i class="fa fa-cogs"></i><span class="title">Service List</span></a></li>
@@ -21,7 +24,7 @@
 				</ul>
 			</li>
 		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ROLE_COMPANY_ADMIN')">
 			<li class="has-sub"><a href="#"><i class="fa fa-wrench"></i><span class="title">Workers</span></a>
 				<ul class="nav collapse">
 					<li class=""><a href="${ctx}/workerList"><i class="fa fa-cogs"></i><span class="title">Worker List</span></a></li>
@@ -29,7 +32,7 @@
 				</ul>
 			</li>
 		</sec:authorize>
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ROLE_COMPANY_ADMIN')">
 			<li class="has-sub"><a href="#"><i class="fa fa-car"></i><span class="title">Vehicle</span></a>
 				<ul class="nav collapse">
 					<li class=""><a href="${ctx}/listVehicles"><i class="fa fa-motorcycle"></i><span class="title">Vehicle List</span></a></li>

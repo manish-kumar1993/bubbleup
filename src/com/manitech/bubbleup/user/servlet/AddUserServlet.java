@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.manitech.bubbleup.manager.UserDataManager;
-import com.manitech.bubbleup.model.MasterRole;
+import com.manitech.bubbleup.model.Role;
 
 public class AddUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,8 +24,8 @@ public class AddUserServlet extends HttpServlet {
 //			userInfo = new UserDataManager().getUserByUserName(loggedInUser);
 //		}
 		
-		List<MasterRole> masterRoleList = userDataManager.getMasterRoles();
-		request.setAttribute("masterRoleList", masterRoleList);
+		List<Role> roleList = userDataManager.getRoles();
+		request.setAttribute("roleList", roleList);
 		
 
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").forward(request, response);
