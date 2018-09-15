@@ -26,7 +26,6 @@ public class AddUserServlet extends HttpServlet {
 		
 		List<Role> roleList = userDataManager.getRoles();
 		request.setAttribute("roleList", roleList);
-		
 
 		request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").forward(request, response);
 	}

@@ -203,7 +203,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>addCompany</servlet-name>
-    <jsp-file>/WEB-INF/pages/company/addCompany.jsp</jsp-file>
+    <servlet-class>com.manitech.bubbleup.company.servlet.AddCompanyServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>addCompany</servlet-name>

@@ -112,6 +112,7 @@ public class CompanyManager {
 				company.setState(resultSet.getString("state"));
 				company.setTown(resultSet.getString("town"));
 				company.setVillage(resultSet.getString("village"));
+				company.setServiceType(resultSet.getString("serviceType"));
 			}
 			resultSet.close();
 			statement.close();

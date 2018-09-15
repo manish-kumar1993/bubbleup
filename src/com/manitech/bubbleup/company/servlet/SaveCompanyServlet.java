@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.manitech.bubbleup.manager.CompanyManager;
+import com.manitech.bubbleup.manager.ServiceVehicleWorkerManager;
 import com.manitech.bubbleup.manager.UserDataManager;
+import com.manitech.bubbleup.model.Services;
 import com.manitech.bubbleup.model.UserDetail;
 import com.manitech.bubbleup.util.AppUtil;
 
@@ -34,7 +36,8 @@ public class SaveCompanyServlet extends HttpServlet {
 		String state = request.getParameter("state");
 		String serviceType = request.getParameter("serviceType");
 		String paymentStatus = request.getParameter("paymentStatus");
-
+		List<Services> services = new ServiceVehicleWorkerManager().getServiceList(null);
+		
 		request.setAttribute("id", id);
 		request.setAttribute("name", name);
 		request.setAttribute("address", address);
@@ -43,6 +46,7 @@ public class SaveCompanyServlet extends HttpServlet {
 		request.setAttribute("town", town);
 		request.setAttribute("state", state);
 		request.setAttribute("serviceType", serviceType);
+		request.setAttribute("services", services);
 		
 		boolean savedStaus = new CompanyManager().saveCompanyDetails(id, name, address, country, village,
 					town,  state, serviceType, paymentStatus, userInfo.getId());

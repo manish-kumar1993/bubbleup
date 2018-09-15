@@ -59,8 +59,13 @@
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<label>Service Type</label> <select id="serviceType" name="serviceType"
 							class="selectCss form-control">
-							<option value="ACTIVE" selected>ACTIVE</option>
-							<option value="INACTIVE">INACTIVE</option>
+							<c:if test="${requestScope.services.size()>0}">
+									<c:forEach var="service" items="${requestScope.services}">
+										<option value="${service.type}"
+											${fn:contains(serviceType,service.type)  ? 'selected="selected"' : ''}><c:out
+												value="${service.type}" /></option>
+									</c:forEach>
+							</c:if>
 						</select>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-12">
