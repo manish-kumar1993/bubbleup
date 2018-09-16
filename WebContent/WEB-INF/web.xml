@@ -242,6 +242,14 @@
     <url-pattern>/statusUpdate</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>assignCompany</servlet-name>
+    <servlet-class>com.manitech.bubbleup.company.servlet.AssignCompanyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>assignCompany</servlet-name>
+    <url-pattern>/assignCompany</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>addService</servlet-name>
     <jsp-file>/WEB-INF/pages/service/addService.jsp</jsp-file>
   </servlet>

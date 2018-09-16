@@ -50,7 +50,16 @@
 										<td><c:out value="${company.village}" /></td>
 										<td><c:out value="${company.address}" /></td>
 										<td><c:out value="${company.paymentStatus}" /></td>
-										<td><c:out value="${company.assignedTo}" /></td>
+										<td>
+											<a style="cursor: pointer;" title="Click to Assign" href="${ctx}/assignCompany?id=${company.id}">
+												<c:if test='${fn:length(company.assignedTo) > 0}'>
+													<c:out value="${company.assignedTo}" />
+												</c:if>
+												<c:if test='${fn:length(company.assignedTo) == 0}'>
+													Click to Assign
+												</c:if>
+											</a>
+										</td>
 										<td><a style="cursor: pointer;" title="Edit" href="${ctx}/editCompany?id=${company.id}">
 										        <i class="fa fa-pencil-square-o"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										        <a style="cursor: pointer;" title="Delete" href="${ctx}/deleteCompany?id=${company.id}">

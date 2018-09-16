@@ -28,16 +28,25 @@ public class UpdateCompanyServlet extends HttpServlet{
 		if(userInfo != null) {
 			String id = request.getParameter("id");
 			String status = request.getParameter("status");
-			int records = new CompanyManager().updateCompanyById(id,status);
+			String[] assignedUsers= request.getParameterValues("assignedUsers");
+			int records = new CompanyManager().updateCompanyById(id,status,assignedUsers);
 			if(records >0) {
-				if("INACTIVE".equals(status))
-					saveMessageAndError(request, "Company marked Inactive","messages");
-				else {
-					saveMessageAndError(request, "Company marked Active","messages");
+				if(AppUtil.isNotEmpty(status)) {
+					if("INACTIVE".equals(status))
+						saveMessageAndError(request, "Company marked Inactive","messages");
+					else {
+						saveMessageAndError(request, "Company marked Active","messages");
+					}
+				} else {
+					saveMessageAndError(request, "Company Assigned Successfully","messages");
 				}
 			}
 		}
 		response.sendRedirect("dashboard");
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void saveMessageAndError(HttpServletRequest request, String msg,String type) {

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -142,10 +143,15 @@ public class CompanyManager {
 		return records;
 	}
 
-	public int updateCompanyById(String id, String status) {
+	public int updateCompanyById(String id, String status, String[] assignedUsers) {
 		Statement statement = null;
-		int records = 0;
-		String query = "update company set status = '"+status+"' where id = '"+id+"'";
+		int records = 0; 
+		String query = "";
+		String assignedTo = Arrays.toString(assignedUsers);
+		if(AppUtil.isNotEmpty(status))
+			 query = "update company set status = '"+status+"' where id = '"+id+"'";
+		else
+			 query = "update company set assignedTo = '"+assignedTo+"' where id = '"+id+"'";
 		Connection connection = DatabaseUtil.getDbConnection();
 		try {
 			statement = connection.createStatement();
