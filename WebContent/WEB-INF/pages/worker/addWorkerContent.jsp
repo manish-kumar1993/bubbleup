@@ -42,7 +42,7 @@
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<label>Mobile Number</label> <input type="text"
 							placeholder="Mobile Number" class="form-control" name="mobileNo"
-							id="mobileNo" maxlength="15">
+							id="mobileNo" maxlength="15" value='<c:out value="${requestScope.mobileNo}" />' >
 <!-- 							<label id="mnId" class="errormsg">Please enter valid Mobile Number</label> -->
 					</div>
 				</div>

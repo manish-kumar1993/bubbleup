@@ -40,17 +40,20 @@ public class SaveWorkerServlet extends HttpServlet {
 		boolean isUserAvailable = userDataManager.isUsernameExist(username, userId);
 		if (isUserAvailable) {
 			saveMessageAndError(request, "Worker Already Exist","messages");
-			request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addWorker.jsp").forward(request, response);
+			request.getServletContext().getRequestDispatcher("/WEB-INF/pages/worker/addWorker.jsp").forward(request, response);
 			return;
 		} else {
 			boolean savedStaus = userDataManager.saveUserDetails(userId, firstName, "", username, password,
 					mobileNo,  saltedPass, "", "", userInfo.getId(),"");
 			if(savedStaus){
-				saveMessageAndError(request, "Worker updated successfully","messages");
-					response.sendRedirect("workersList");
+				if(AppUtil.isNotEmpty(userId)) 
+					saveMessageAndError(request, "Worker updated successfully","messages");
+				else
+					saveMessageAndError(request, "Worker added successfully","messages");
+					response.sendRedirect("workerList");
 			}else{
 				saveMessageAndError(request, "There was some error. Please try again.","errors");
-				request.getServletContext().getRequestDispatcher("/WEB-INF/pages/user/addWorker.jsp").forward(request, response);
+				request.getServletContext().getRequestDispatcher("/WEB-INF/pages/worker/addWorker.jsp").forward(request, response);
 			}
 			
 		}

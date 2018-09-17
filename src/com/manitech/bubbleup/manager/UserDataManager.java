@@ -78,7 +78,8 @@ public class UserDataManager {
 				}
 				 userRoleTableInsertion(userId, roleId);
 				 update=true;
-			}
+			} else if(x>0)
+				update = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
