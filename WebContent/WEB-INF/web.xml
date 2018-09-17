@@ -315,7 +315,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>ListWorkerServlet</servlet-name>
-    <servlet-class>com.manitech.bubbleup.user.servlet.ListUserServlet</servlet-class>
+    <servlet-class>com.manitech.bubbleup.worker.servlet.ListWorkerServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ListWorkerServlet</servlet-name>

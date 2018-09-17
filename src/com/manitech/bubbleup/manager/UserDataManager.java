@@ -421,4 +421,41 @@ public class UserDataManager {
 		return roleList;
 	}
 
+
+
+
+
+	public List<UserDetail> getWorkers(Object object, String name) {
+		List<UserDetail> userDetails = new ArrayList<UserDetail>();
+		Connection connection = DatabaseUtil.getDbConnection();
+		PreparedStatement preparedStatement = null;
+		StringBuffer stringBuffer = new StringBuffer(
+				"select u.id,u.username,u.mobile,u.token,u.password,u.status,u.firstName,u.lastName from user as u  where userType = 'WORKER' ");
+		if(AppUtil.isNotEmpty(name))
+			stringBuffer.append(" and u.firstName like '%"+name+"%' or u.lastName like '%"+name+"%'");
+		try {
+			preparedStatement = connection.prepareStatement(stringBuffer.toString());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				UserDetail userDetail = new UserDetail();
+				userDetail.setUserId(resultSet.getString("u.id"));
+				userDetail.setUsername(resultSet.getString("u.username"));
+				userDetail.setPassword(resultSet.getString("u.password"));
+				userDetail.setMobileNo(resultSet.getString("u.mobile"));
+				userDetail.setToken(resultSet.getString("u.token"));
+				userDetail.setStatus(resultSet.getString("u.status"));
+				userDetail.setFirstName(resultSet.getString("u.firstName"));
+				userDetail.setLastName(resultSet.getString("u.lastName"));
+				userDetails.add(userDetail);
+			}
+			resultSet.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DatabaseUtil.closePreparedStatement(preparedStatement);
+			DatabaseUtil.closeDBConnection(connection);
+		}
+		return userDetails;
+	}
+
 }
